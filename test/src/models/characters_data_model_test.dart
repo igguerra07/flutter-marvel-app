@@ -35,15 +35,27 @@ const jsonValid = """
     "results": [
       {
         "id": 1,
-        "name" : "SuperHero01"
+        "name" : "SuperHero01",
+        "thumbnail": {
+          "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784",
+          "extension": "jpg"
+        }
       },
       {
         "id": 2,
-        "name" : "SuperHero02"
+        "name" : "SuperHero02",
+        "thumbnail": {
+          "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784",
+          "extension": "jpg"
+        }
       },
       {
         "id": 3,
-        "name" : "SuperHero03"
+        "name" : "SuperHero03",
+        "thumbnail": {
+          "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784",
+          "extension": "jpg"
+        }
       }
     ]
   }

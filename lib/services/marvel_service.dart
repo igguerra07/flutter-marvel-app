@@ -23,7 +23,7 @@ class MarvelService {
     final hash = md5.convert(utf8.encode("1$privateKey$apiKey"));
   
     final path =
-        "$baseUrl/$getCharcters?apikey=$apiKey&hash=$hash&ts=1";
+        "$baseUrl/$getCharcters?apikey=$apiKey&hash=$hash&ts=1&limit=100";
 
     final response = await _client.get(
       Uri.parse(path),

@@ -13,9 +13,9 @@ void main() {
   late GetCharacters getCharactersUseCase;
 
   const charactersFromRepository = [
-    Character(id: 0, name: "Super Hero 1"),
-    Character(id: 1, name: "Super Hero 2"),
-    Character(id: 2, name: "Super Hero 3"),
+    Character(id: 0, name: "Super Hero 1", imageUrl: ""),
+    Character(id: 1, name: "Super Hero 2", imageUrl: ""),
+    Character(id: 2, name: "Super Hero 3", imageUrl: ""),
   ];
 
   final failureFromRepository = ServerFailure(

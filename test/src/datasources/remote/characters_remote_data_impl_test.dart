@@ -4,6 +4,7 @@ import 'package:marvel_app/src/datasources/remote/characters_remote_data.dart';
 import 'package:marvel_app/src/datasources/remote/characters_remote_data_impl.dart';
 import 'package:marvel_app/src/entities/exceptions.dart';
 import 'package:marvel_app/src/models/character_model.dart';
+import 'package:marvel_app/src/models/character_thumbnail_model.dart';
 import 'package:marvel_app/src/models/characters_data_model.dart';
 import 'package:marvel_app/src/models/characters_response_model.dart';
 import 'package:mocktail/mocktail.dart';
@@ -16,7 +17,13 @@ void main() {
 
   final responseSuccess = CharactersResponse(
     data: CharactersData(
-      results: const [CharacterModel(id: 0, name: "SuperHero 01")],
+      results: [
+        CharacterModel(
+          id: 0,
+          name: "SuperHero 01",
+          imageUrl: CharacterThumbnailModel(path: ""),
+        ),
+      ],
     ),
   );
 

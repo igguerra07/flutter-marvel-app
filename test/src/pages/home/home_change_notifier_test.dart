@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marvel_app/src/entities/character.dart';
 import 'package:marvel_app/src/entities/failure.dart';
-import 'package:marvel_app/src/pages/home/characters_change_notifier.dart';
+import 'package:marvel_app/src/pages/home/home_change_notifier.dart';
 import 'package:marvel_app/src/pages/home/home_page_state.dart';
 import 'package:marvel_app/src/usescases/get_characters.dart';
 import 'package:mocktail/mocktail.dart';
@@ -19,8 +19,8 @@ void main() {
   });
 
   const charactersFromService = [
-    Character(id: 0, name: "SuperHero01"),
-    Character(id: 1, name: "SuperHero02"),
+    Character(id: 0, name: "SuperHero01", imageUrl: ""),
+    Character(id: 1, name: "SuperHero02", imageUrl: ""),
   ];
 
   final failure = ServerFailure(message: "Unable retrive data");

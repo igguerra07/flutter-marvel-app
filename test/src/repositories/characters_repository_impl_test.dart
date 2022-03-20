@@ -4,6 +4,7 @@ import 'package:marvel_app/src/datasources/remote/characters_remote_data.dart';
 import 'package:marvel_app/src/entities/exceptions.dart';
 import 'package:marvel_app/src/entities/failure.dart';
 import 'package:marvel_app/src/models/character_model.dart';
+import 'package:marvel_app/src/models/character_thumbnail_model.dart';
 import 'package:marvel_app/src/models/characters_data_model.dart';
 import 'package:marvel_app/src/models/characters_response_model.dart';
 import 'package:marvel_app/src/repositories/characters_repository.dart';
@@ -19,8 +20,12 @@ void main() {
 
   final successResponse = CharactersResponse(
     data: CharactersData(
-      results: const [
-        CharacterModel(id: 1, name: "SuperHero 01")
+      results: [
+        CharacterModel(
+          id: 0,
+          name: "SuperHero 01",
+          imageUrl: CharacterThumbnailModel(path: ""),
+        )
       ],
     ),
   );
@@ -57,7 +62,7 @@ void main() {
     final result = await charactersRepository.getCharacters();
 
     verify(() => mockCharacteresRemoteDataSource.getCharacters()).called(1);
-    
+
     expect(result, left(failureResponse));
   });
 }

@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:marvel_app/resources/colors.dart';
+import 'package:marvel_app/resources/icons.dart';
+import 'package:marvel_app/resources/images.dart';
+import 'package:marvel_app/resources/strings.dart';
 import 'package:marvel_app/src/datasources/remote/characters_remote_data.dart';
 import 'package:marvel_app/src/datasources/remote/characters_remote_data_impl.dart';
-import 'package:marvel_app/src/pages/home/characters_change_notifier.dart';
+import 'package:marvel_app/src/pages/home/home_change_notifier.dart';
 import 'package:marvel_app/src/pages/home/home_page_state.dart';
 import 'package:marvel_app/services/marvel_service.dart';
+import 'package:marvel_app/src/pages/home/widgets/characters_list.dart';
+import 'package:marvel_app/src/pages/home/widgets/characters_section.dart';
+import 'package:marvel_app/src/pages/home/widgets/characters_section_header.dart';
+import 'package:marvel_app/src/pages/home/widgets/home_header.dart';
+import 'package:marvel_app/src/pages/home/widgets/marvel_app_bar.dart';
 import 'package:marvel_app/src/repositories/characters_repository.dart';
 import 'package:marvel_app/src/repositories/characters_repository_impl.dart';
 import 'package:marvel_app/src/usescases/get_characters.dart';
@@ -16,7 +25,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final client = http.Client();
-    
+
     final marvelService = MarvelService(client: client);
 
     final charactersRemoteDataSource = CharactersRemoteDataSourceImpl(
@@ -35,36 +44,80 @@ class HomePage extends StatelessWidget {
       getCharacters: getCharacters,
     );
 
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(),
-      body: ChangeNotifierProvider(
-        create: (_) => charactersNotifier..getCharacters(),
-        child: Consumer<CharactersChangeNotifier>(
-          builder: (BuildContext context, value, Widget? child) {
-            final currentState = value.state;
-            if (currentState is HomeLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (currentState is HomeFailureState) {
-              return Center(
-                child: Text(currentState.error.toString()),
-              );
-            }
-            if (currentState is HomeSuccessState) {
-              final characters = currentState.characters;
-              return ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemCount: currentState.characters.length,
-                itemBuilder: (_, index) => Text(characters[index].name),
-                separatorBuilder: (_, __) => const SizedBox(
-                  height: 16,
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
+      body: SafeArea(
+        child: ChangeNotifierProvider(
+          create: (_) => charactersNotifier..getCharacters(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const MarvelAppBar(),
+              const SizedBox(height: 24),
+              const HomeHeader(),
+              const SizedBox(height: 16),
+              Consumer<CharactersChangeNotifier>(
+                builder: (_, value, __) {
+                  final currentState = value.state;
+                  if (currentState is HomeLoadingState) {
+                    return const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: ColorResource.red,
+                        ),
+                      ),
+                    );
+                  }
+                  if (currentState is HomeFailureState) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(
+                          currentState.error.toString(),
+                        ),
+                      ),
+                    );
+                  }
+                  if (currentState is HomeSuccessState) {
+                    final characters = currentState.characters;
+                    return Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: deviceHeight * .4,
+                              child: CharactersSection(
+                                sectionText: StringResource.heros,
+                                characters: characters,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              height: deviceHeight * .4,
+                              child: CharactersSection(
+                                sectionText: StringResource.antihero,
+                                characters: characters,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              height: deviceHeight * .4,
+                              child: CharactersSection(
+                                sectionText: StringResource.villians,
+                                characters: characters,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

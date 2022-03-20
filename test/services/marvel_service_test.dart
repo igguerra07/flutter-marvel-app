@@ -30,7 +30,7 @@ void main() {
     verify(() => mockHttpClient.get(any())).called(1);
 
     expect(result, isA<CharactersResponse>());
-    expect(result.data.results.length, 0);
+    expect(result.data.results.length, 1);
   });
   test("""
   Deve retornar uma ServerException quando for 
@@ -56,7 +56,11 @@ const jsonResponse = """
       "results": [
         {
           "id": 0,
-          "name": "SuperHero 00"
+          "name": "SuperHero 00",
+          "thumbnail": {
+            "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784",
+            "extension": "jpg"
+          }
         }
       ]
     }
